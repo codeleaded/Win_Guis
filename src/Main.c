@@ -1,4 +1,3 @@
-//#include "C:/Wichtig/System/Static/Library/WindowEngine.h"
 #include "/home/codeleaded/System/Static/Library/WindowEngine.h"
 #include "/home/codeleaded/System/Static/Library/Random.h"
 #include "/home/codeleaded/System/Static/Library/Scene.h"
@@ -30,7 +29,11 @@ void Component7_React(void* parent,Rotatable* b,RotatableEvent* be){
 
 void Setup(AlxWindow* w){
 	// Button ProgressBar Scrollbar Slider Textbox Selection Rotatable
-	scene = Scene_New();
+	scene = Scene_New(
+        NULL,
+        (Rect){ 0.0f,0.0f,(float)w->Width,(float)w->Height },
+        BLACK
+    );
 
 	Scene_Add(&scene,(Button[]){
 		Button_NewStd(
@@ -107,7 +110,9 @@ void Setup(AlxWindow* w){
 }
 
 void Update(AlxWindow* w){
-	Scene_Update(&scene,window.Strokes,GetMouse(),GetMouseBefore());
+	Scene_Adapt(&scene,GetWidth(),GetHeight());
+    Scene_Update(&scene);
+    Scene_Input(&scene,window.Strokes,GetMouse(),GetMouseBefore());
 
 	Clear(BLACK);
 
